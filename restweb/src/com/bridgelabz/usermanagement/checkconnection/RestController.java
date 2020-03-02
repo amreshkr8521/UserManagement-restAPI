@@ -41,11 +41,11 @@ public class RestController {
 	@Path("add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public String addUser(UserBeans beans) {
-		String query = "INSERT INTO restapiUsers (fname,lname,mname,email,age,gender,user,mobile,location,userName,country,dob,password) VALUES('"
+		String query = "INSERT INTO restapiUsers (fname,lname,mname,email,age,gender,user,mobile,location,userName,country,dob,password,regDate) VALUES('"
 				+ beans.getfName() + "','" + beans.getmName() + "','" + beans.getlName() + "','" + beans.getEmail()
 				+ "','" + beans.getAge() + "','" + beans.getGender() + "','" + beans.getUser() + "','"
 				+ beans.getMobile() + "','" + beans.getLocation() + "','" + beans.getUsername() + "','"
-				+ beans.getCountry() + "','" + beans.getDob() + "','" + beans.getPassword() + "');";
+				+ beans.getCountry() + "','" + beans.getDob() + "','" + beans.getPassword() + "',now());";
 
 		System.out.println(beans.toString());
 
@@ -119,4 +119,15 @@ public class RestController {
 		return ejbUser.genderPercentage("Female");
 	}
 
+	@GET
+	@Path("login")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public String login(@PathParam("username") String userName,@PathParam("password")String password) {
+		UserBeans data=ejbUser.login(userName,password);
+		if(data!=null)
+			return "login done";
+		else
+			return "something wrong";
+		
+	}
 }

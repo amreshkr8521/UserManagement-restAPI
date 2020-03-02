@@ -22,4 +22,6 @@ public interface UserStatelessRemote {
 	public String getHistory();
 
 	public float genderPercentage(String gender);
+
+	public UserBeans login(String userName, String password);
 }

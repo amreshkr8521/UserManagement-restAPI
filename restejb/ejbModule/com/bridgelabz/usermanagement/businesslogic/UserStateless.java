@@ -89,4 +89,15 @@ public class UserStateless implements UserStatelessRemote {
 		return (maleCount / totalUser) * 100;
 	}
 
+	@Override
+	public UserBeans login(String userName, String password) {
+		String query="SELECT * FROM restapiUsers Where userName='"+userName+"' AND password='"+password+"';";
+		UserBeans user=remoteDatabase.getUser(query);
+		if(user!=null)
+			return user;
+		else 
+			return null;
+		
+	}
+
 }
