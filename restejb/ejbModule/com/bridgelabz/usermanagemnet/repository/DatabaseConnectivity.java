@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 
@@ -90,6 +92,49 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 		} catch (SQLException e) {
 
 		}
+	}
+
+	/**
+	 * to get the registration history from the database
+	 * 
+	 * @param query String
+	 * @return List
+	 */
+	@Override
+	public List<String> getHistory(String query) {
+		List<String> list = new ArrayList<String>();
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = jdbcConnection().prepareStatement(query);
+			ResultSet resultset = preparedStatement.executeQuery();
+			while (resultset.next()) {
+				list.add(resultset.getString(1));
+			}
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+
+		return list;
+	}
+
+	/**
+	 * to count the number of gender according to the query given.
+	 * 
+	 * @param query String
+	 * @return int
+	 */
+	@Override
+	public int countGender(String query) {
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = jdbcConnection().prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			int count = resultSet.getInt(1);
+		} catch (Exception e) {
+
+		}
+
+		return 0;
 	}
 
 }

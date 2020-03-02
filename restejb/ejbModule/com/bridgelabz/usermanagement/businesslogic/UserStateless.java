@@ -1,5 +1,7 @@
 package com.bridgelabz.usermanagement.businesslogic;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -56,6 +58,35 @@ public class UserStateless implements UserStatelessRemote {
 	public void update(String username, String field, String data) {
 		String query = "UPDATE FROM restapiUsers SET " + field + "='" + data + "' WHERE userName='" + username + "';";
 		remoteDatabase.alterUser(query);
+	}
+
+	/**
+	 * to get the registration history from the database
+	 * 
+	 * @param query String
+	 * @return List
+	 */
+	@Override
+	public String getHistory() {
+		String query = "SELECT regDate FROM restapiUsers;";
+		List<String> date = remoteDatabase.getHistory(query);
+		return null;
+	}
+
+	/**
+	 * to count the number of gender according to the query given.
+	 * 
+	 * @param query String
+	 * @return int
+	 */
+	@Override
+	public float genderPercentage(String gender) {
+		String male = "Select Count(gender) FROM restapiUsers WHERE gender='" + gender + "';";
+		String genderCount = "SELECT COUNT(gender) FROM restapiUsers ;";
+		int totalUser = remoteDatabase.countGender(genderCount);
+		int maleCount = remoteDatabase.countGender(male);
+
+		return (maleCount / totalUser) * 100;
 	}
 
 }

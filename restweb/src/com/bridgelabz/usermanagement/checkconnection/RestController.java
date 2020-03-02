@@ -94,7 +94,29 @@ public class RestController {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void updateUser(@PathParam("username") String username, @PathParam("field") String field,
 			@PathParam("data") String data) {
+		ejbUser.update(username, field, data);
 
+	}
+
+	@GET
+	@Path("registerUsers")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public void userRegistration() {
+		String data = ejbUser.getHistory();
+	}
+
+	@GET
+	@Path("malepercents")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public float malePecent() {
+		return ejbUser.genderPercentage("Male");
+	}
+
+	@GET
+	@Path("femalepercents")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public float femalePecent() {
+		return ejbUser.genderPercentage("Female");
 	}
 
 }

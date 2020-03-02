@@ -18,4 +18,8 @@ public interface UserStatelessRemote {
 	public UserBeans getUser(String query);
 
 	public void update(String username, String field, String data);
+
+	public String getHistory();
+
+	public float genderPercentage(String gender);
 }
