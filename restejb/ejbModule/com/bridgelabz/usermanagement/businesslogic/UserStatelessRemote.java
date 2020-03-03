@@ -1,5 +1,7 @@
 package com.bridgelabz.usermanagement.businesslogic;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import com.bridgelabz.usermanagement.model.UserBeans;
@@ -19,7 +21,7 @@ public interface UserStatelessRemote {
 
 	public void update(String username, String field, String data);
 
-	public String getHistory();
+	public List<String> getHistory();
 
 	public float genderPercentage(String gender);
 

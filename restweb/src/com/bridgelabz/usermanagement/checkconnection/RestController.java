@@ -1,5 +1,7 @@
 package com.bridgelabz.usermanagement.checkconnection;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,9 +48,6 @@ public class RestController {
 				+ "','" + beans.getAge() + "','" + beans.getGender() + "','" + beans.getUser() + "','"
 				+ beans.getMobile() + "','" + beans.getLocation() + "','" + beans.getUsername() + "','"
 				+ beans.getCountry() + "','" + beans.getDob() + "','" + beans.getPassword() + "',now());";
-
-		System.out.println(beans.toString());
-
 		ejbUser.alterUser(query);
 		return "done";
 	}
@@ -77,7 +76,6 @@ public class RestController {
 	@Path("get/{username}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public UserBeans getUser(@PathParam("username") String username) {
-
 		return ejbUser.getUser(username);
 	}
 
@@ -98,13 +96,21 @@ public class RestController {
 
 	}
 
+	/**
+	 * to get the registration history of the user
+	 */
 	@GET
 	@Path("registerUsers")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void userRegistration() {
-		String data = ejbUser.getHistory();
+		List<String> data = ejbUser.getHistory();
 	}
 
+	/**
+	 * To get the male percentage among the total users
+	 * 
+	 * @return float
+	 */
 	@GET
 	@Path("malepercents")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -112,6 +118,11 @@ public class RestController {
 		return ejbUser.genderPercentage("Male");
 	}
 
+	/**
+	 * To get the female percentage among the total users
+	 * 
+	 * @return float
+	 */
 	@GET
 	@Path("femalepercents")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -119,15 +130,22 @@ public class RestController {
 		return ejbUser.genderPercentage("Female");
 	}
 
+	/**
+	 * To login the user and access the permission got
+	 * 
+	 * @param userName String
+	 * @param password String
+	 * @return String
+	 */
 	@GET
 	@Path("login")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public String login(@PathParam("username") String userName,@PathParam("password")String password) {
-		UserBeans data=ejbUser.login(userName,password);
-		if(data!=null)
+	public String login(@PathParam("username") String userName, @PathParam("password") String password) {
+		UserBeans data = ejbUser.login(userName, password);
+		if (data != null)
 			return "login done";
 		else
 			return "something wrong";
-		
+
 	}
 }

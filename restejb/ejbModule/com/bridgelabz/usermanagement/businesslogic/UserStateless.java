@@ -67,10 +67,10 @@ public class UserStateless implements UserStatelessRemote {
 	 * @return List
 	 */
 	@Override
-	public String getHistory() {
+	public List<String> getHistory() {
 		String query = "SELECT regDate FROM restapiUsers;";
 		List<String> date = remoteDatabase.getHistory(query);
-		return null;
+		return date;
 	}
 
 	/**
@@ -85,19 +85,25 @@ public class UserStateless implements UserStatelessRemote {
 		String genderCount = "SELECT COUNT(gender) FROM restapiUsers ;";
 		int totalUser = remoteDatabase.countGender(genderCount);
 		int maleCount = remoteDatabase.countGender(male);
-
 		return (maleCount / totalUser) * 100;
 	}
 
+	/**
+	 * To login the user and access the permission got
+	 * 
+	 * @param userName String
+	 * @param password String
+	 * @return userBeans
+	 */
 	@Override
 	public UserBeans login(String userName, String password) {
-		String query="SELECT * FROM restapiUsers Where userName='"+userName+"' AND password='"+password+"';";
-		UserBeans user=remoteDatabase.getUser(query);
-		if(user!=null)
+		String query = "SELECT * FROM restapiUsers Where userName='" + userName + "' AND password='" + password + "';";
+		UserBeans user = remoteDatabase.getUser(query);
+		if (user != null)
 			return user;
-		else 
+		else
 			return null;
-		
+
 	}
 
 }

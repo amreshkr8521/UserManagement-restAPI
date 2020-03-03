@@ -47,9 +47,8 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 	 */
 	@Override
 	public UserBeans getUser(String query) {
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = jdbcConnection().prepareStatement(query);
+			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			ResultSet resultset = preparedStatement.executeQuery();
 			while (resultset.next()) {
 				user = new UserBeans();
@@ -66,7 +65,6 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 				user.setAge(resultset.getInt(5));
 				user.setDob(resultset.getString(13));
 				user.setMobile(resultset.getLong(8));
-				// user.setExtmobile(15);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
@@ -81,16 +79,10 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 	 */
 	@Override
 	public void alterUser(String query) {
-		Connection connection = jdbcConnection();
-//		String query="DELETE FROM restapiUsers WHERE username='"+bean.getUsername()+"';";
-//		String query="INSERT INTO restapiUsers (fname,lname,mname,email,age,gender,user,mobile,location,userName,country,dob) VALUES('"+user.getfName()+"','"+user.getmName()+"','"+user.getlName()+"','"+user.getGmail()+"','"+user.getAge()+"','"+user.getGender()+"','"+user.getUser()+"','"+user.getMobile()+"','"+user.getLocation()+"','"+user.getUsername()+"','"+user.getCountry()+",',"+user.getDob()+"'); ";
-
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-
 		}
 	}
 
@@ -103,9 +95,8 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 	@Override
 	public List<String> getHistory(String query) {
 		List<String> list = new ArrayList<String>();
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = jdbcConnection().prepareStatement(query);
+			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			ResultSet resultset = preparedStatement.executeQuery();
 			while (resultset.next()) {
 				list.add(resultset.getString(1));
@@ -113,7 +104,6 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-
 		return list;
 	}
 
@@ -125,15 +115,12 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 	 */
 	@Override
 	public int countGender(String query) {
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = jdbcConnection().prepareStatement(query);
+			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			int count = resultSet.getInt(1);
 		} catch (Exception e) {
-
 		}
-
 		return 0;
 	}
 
