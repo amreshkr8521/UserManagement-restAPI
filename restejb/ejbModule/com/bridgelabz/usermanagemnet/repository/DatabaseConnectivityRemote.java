@@ -19,7 +19,7 @@ public interface DatabaseConnectivityRemote {
 
 	public UserBeans getUser(String query);
 
-	void alterUser(String query);
+	void executeQuery(String query);
 
 	public List<String> getHistory(String query);
 

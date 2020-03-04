@@ -78,7 +78,7 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 	 * @param query String
 	 */
 	@Override
-	public void alterUser(String query) {
+	public void executeQuery(String query) {
 		try {
 			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			preparedStatement.executeUpdate();
@@ -118,7 +118,8 @@ public class DatabaseConnectivity implements DatabaseConnectivityRemote {
 		try {
 			PreparedStatement preparedStatement = jdbcConnection().prepareStatement(query);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			int count = resultSet.getInt(1);
+			resultSet.next();
+			return resultSet.getInt(1);
 		} catch (Exception e) {
 		}
 		return 0;

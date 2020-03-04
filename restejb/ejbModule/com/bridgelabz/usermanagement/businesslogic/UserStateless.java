@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.bridgelabz.usermanagement.model.Permission;
 import com.bridgelabz.usermanagement.model.UserBeans;
 import com.bridgelabz.usermanagemnet.repository.DatabaseConnectivityRemote;
 
@@ -33,7 +34,7 @@ public class UserStateless implements UserStatelessRemote {
 	 */
 	@Override
 	public void alterUser(String query) {
-		remoteDatabase.alterUser(query);
+		remoteDatabase.executeQuery(query);
 	}
 
 	/**
@@ -56,8 +57,8 @@ public class UserStateless implements UserStatelessRemote {
 	 */
 	@Override
 	public void update(String username, String field, String data) {
-		String query = "UPDATE FROM restapiUsers SET " + field + "='" + data + "' WHERE userName='" + username + "';";
-		remoteDatabase.alterUser(query);
+		String query = "UPDATE restapiUsers SET " + field + "='" + data + "' WHERE userName='" + username + "';";
+		remoteDatabase.executeQuery(query);
 	}
 
 	/**
@@ -84,7 +85,10 @@ public class UserStateless implements UserStatelessRemote {
 		String male = "Select Count(gender) FROM restapiUsers WHERE gender='" + gender + "';";
 		String genderCount = "SELECT COUNT(gender) FROM restapiUsers ;";
 		int totalUser = remoteDatabase.countGender(genderCount);
+		
+		
 		int maleCount = remoteDatabase.countGender(male);
+		System.out.println(totalUser+"************************************"+maleCount);
 		return (maleCount / totalUser) * 100;
 	}
 
@@ -104,6 +108,22 @@ public class UserStateless implements UserStatelessRemote {
 		else
 			return null;
 
+	}
+
+	/**
+	 * To add the permission to the user according to the admin want to give the
+	 * permission.
+	 * 
+	 * @param permission Permission
+	 * @param userId     int
+	 */
+	@Override
+	public void givePermission(Permission permission, int userId) {
+		String query = "INSERT INTO permission (userId,dashboard,setting,userinfo,webPage1,webPage2,webPage3) VALUES("
+				+ userId + ",'" + permission.getDashboard() + "','" + permission.getSettings() + "','"
+				+ permission.getUserInformation() + "','" + permission.getWeb1() + "','" + permission.getWeb2() + "','"
+				+ permission.getWeb3() + "');";
+		remoteDatabase.executeQuery(query);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import com.bridgelabz.usermanagement.model.Permission;
 import com.bridgelabz.usermanagement.model.UserBeans;
 
 /**
@@ -26,4 +27,6 @@ public interface UserStatelessRemote {
 	public float genderPercentage(String gender);
 
 	public UserBeans login(String userName, String password);
+
+	public void givePermission(Permission permission, int userId);
 }

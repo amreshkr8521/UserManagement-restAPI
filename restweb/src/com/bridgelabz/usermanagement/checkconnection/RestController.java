@@ -115,7 +115,7 @@ public class RestController {
 	@Path("malepercents")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public float malePecent() {
-		return ejbUser.genderPercentage("Male");
+		return ejbUser.genderPercentage("male");
 	}
 
 	/**
@@ -138,11 +138,13 @@ public class RestController {
 	 * @return String
 	 */
 	@GET
-	@Path("login")
+	@Path("login/{username}/{password}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public String login(@PathParam("username") String userName, @PathParam("password") String password) {
+		
 		UserBeans data = ejbUser.login(userName, password);
-		if (data != null)
+		System.out.println("*****************************"+data.getCountry());
+		if (data.getUsername().equals(userName))
 			return "login done";
 		else
 			return "something wrong";
